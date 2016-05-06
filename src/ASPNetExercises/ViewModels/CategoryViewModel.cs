@@ -9,6 +9,7 @@ namespace ASPNetExercises.ViewModels
         public CategoryViewModel() { }
         public string CategoryName { get; set; }
         public List<Category> Categories { get; set; }
+        public IEnumerable<MenuItem> MenuItems { get; set; }
         public IEnumerable<SelectListItem> GetCategoryNames()
         {
             return Categories.Select(category => new SelectListItem

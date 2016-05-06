@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using ASPNetExercises.Models;
 using Microsoft.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 
 namespace ASPNetExercises
 {
@@ -29,6 +30,12 @@ namespace ASPNetExercises
             services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
+            services.AddCaching();
+            services.AddSession(o =>
+            {
+                o.IdleTimeout = TimeSpan.FromSeconds(200);
+            });
+
             services.AddMvc();
         }
         // This method gets called by the runtime. Method to configure the HTTP request pipeline.
@@ -38,6 +45,8 @@ namespace ASPNetExercises
             app.UseDeveloperExceptionPage();
             app.UseIdentity();
             app.UseStaticFiles();
+
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
