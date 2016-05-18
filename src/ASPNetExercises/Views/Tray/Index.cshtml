@@ -1,0 +1,75 @@
+﻿<div class="col-sm-3">&nbsp;</div>
+<div class="panel col-sm-6 col-xs-12">
+    <div class="panel-title text-center" style="padding-top:20px;">
+        <h3 style="font-weight:bolder">Tray Contents</h3>
+        <img src="/img/tray.png" style="height:10%;width:10%;padding-bottom:5%;" />
+    </div>
+    <div class="text-center" style="padding-top:10px;">
+        @{
+            Dictionary<int, object> tray = Context.Session.GetObject<Dictionary<int,
+            Object>>("tray");
+            int calTot = 0;
+            decimal fatTot = 0.0M;
+            int saltTot = 0;
+            int cholTot = 0;
+            int proTot = 0;
+            int fbrTot = 0;
+        }
+        <table class="table table-striped">
+            <tr style="font-weight:bolder;">
+                <th class="col-xs-2 text-center">Qty</th>
+                <th class="col-xs-10 text-center">Description</th>
+            </tr>
+            @{
+                if (tray != null)
+                {
+                    foreach (var key in tray.Keys)
+                    {
+                        MenuItemViewModel item = JsonConvert.DeserializeObject
+                        <MenuItemViewModel>
+                        (Convert.ToString(tray[key]));
+                        if (item.Qty > 0)
+                        {
+                            fbrTot += item.FBR * item.Qty;
+                            calTot += item.CAL * item.Qty;
+                            saltTot += item.SALT * item.Qty;
+                            fatTot += item.FAT * item.Qty;
+                            cholTot += item.CHOL * item.Qty;
+                            proTot += item.PRO * item.Qty;
+                            <tr>
+                                <td class="col-xs-2 text-center">@item.Qty</td>
+                                <td class="col-xs-10 text-left">@item.Description</td>
+                            </tr>
+                        }
+                    }
+                }
+            }
+        </table>
+        <hr />
+        <table class="table table-striped">
+            <tr>
+                <th colspan="4" class="col-xs-4 text-left" style="font-size:large;font
+weight:bold;">Tray Totals</th>
+            </tr>
+            <tr>
+                <td class="col-xs-2 text-right">Cals</td>
+                <td class="col-xs-4 text-left" id="cal">@calTot</td>
+                <td class="col-xs-2 text-right">Choles.</td>
+                <td class="col-xs-4 text-left" id="chol">@cholTot</td>
+            </tr>
+            <tr>
+                <td class="col-xs-2 text-right">Fat</td>
+                <td class="col-xs-4 text-left" id="fat">@fatTot</td>
+                <td class="col-xs-2 text-right">Fibre</td>
+                <td class="col-xs-4 text-left" id="fibre">@fbrTot</td>
+            </tr>
+            <tr>
+                <td class="col-xs-2 text-right">Protein</td>
+                <td class="col-xs-4 text-left" id="pro">@proTot</td>
+                <td class="col-xs-2 text-right">Salt</td>
+                <td class="col-xs-4 text-left" id="salt">@saltTot</td>
+            </tr>
+        </table>
+        <a href="/Tray/ClearTray" class="btn btn-sm btn-success">Clear Tray</a>
+    </div>
+</div>

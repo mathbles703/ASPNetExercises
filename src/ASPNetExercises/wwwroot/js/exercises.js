@@ -13,16 +13,15 @@
     });
 });
 function CopyToModal(id) {
-    var data = JSON.parse($("#menuitem" + id).val());
     $("#qty").val("0");
-    $("#cal").text(data.CAL);
-    $("#carb").text(data.CARB);
-    $("#chol").text(data.CHOL) ;
-    $("#fat").text(data.FAT);
-    $("#fibre").text(data.FBR);
-    $("#pro").text(data.PRO);
-    $("#salt").text(data.SALT);
-    $("#description").text(data.Description);
-    $("#detailsGraphic") .attr("src", "/img/burger.jpg");
+    $("#cal").text($("#mcal" + id).val());
+    $("#carb").text($("#mcarb" + id).val());
+    $("#chol").text($("#mchol" + id).val());
+    $("#fat").text($("#mfat" + id).val());
+    $("#fibre").text($("#mfbr" + id).val());
+    $("#pro").text($("#mpro" + id).val());
+    $("#salt").text($("#msalt" + id).val());
+    $("#description").text($("#descr" + id).data("description"));
+    $("#detailsGraphic").attr("src", "/img/burger.jpg");
     $("#detailsId").val(id);
 }
