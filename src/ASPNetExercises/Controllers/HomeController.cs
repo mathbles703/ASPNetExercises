@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Http;
-
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-
+using ASPNetExercises.Utils;
 namespace ASPNetExercises.Controllers
 {
     public class HomeController : Controller
@@ -10,7 +8,16 @@ namespace ASPNetExercises.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            ViewBag.Message = HttpContext.Session.GetString("Message");
+            if (HttpContext.Session.GetString(SessionVars.LoginStatus) == null)
+            {
+                HttpContext.Session.SetString(SessionVars.LoginStatus, "not logged in");
+            }
+            if (HttpContext.Session.GetString(SessionVars.LoginStatus) == "not logged in")
+            {
+                HttpContext.Session.SetString(SessionVars.Message, "most functionality requires you to login!");
+            }
+            ViewBag.Status = HttpContext.Session.GetString(SessionVars.LoginStatus);
+            ViewBag.Message = HttpContext.Session.GetString(SessionVars.Message);
             return View();
         }
     }

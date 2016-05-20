@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using ASPNetExercises.Models;
 using Microsoft.AspNet.Http;
 using ASPNetExercises.ViewModels;
+using ASPNetExercises.Utils;
 namespace ASPNetExercises.Controllers
 {
     public class RegisterController : Controller
@@ -36,8 +37,8 @@ namespace ASPNetExercises.Controllers
                 if (result.Succeeded)
                 {
                     await _signInMgr.SignInAsync(user, isPersistent: false);
-                    HttpContext.Session.SetString("loginstatus", "logged on as " + model.Email);
-                    HttpContext.Session.SetString("Message", "Registered, as " + model.Email);
+                    HttpContext.Session.SetString(SessionVars.LoginStatus, "logged on as " + model.Email);
+                    HttpContext.Session.SetString(SessionVars.Message, "Registered, as " + model.Email);
                 }
                 else
                 {

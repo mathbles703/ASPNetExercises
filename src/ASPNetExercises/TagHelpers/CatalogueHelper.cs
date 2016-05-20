@@ -4,6 +4,7 @@ using Microsoft.AspNet.Razor.TagHelpers;
 using System;
 using System.Text;
 using ASPNetExercises.ViewModels;
+using ASPNetExercises.Utils;
 namespace ASPNetExercises.TagHelpers
 {
     // You may need to install the Microsoft.AspNet.Razor.Runtime package into your project
@@ -21,10 +22,10 @@ namespace ASPNetExercises.TagHelpers
         }
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            if (_session.GetObject<MenuItemViewModel[]>("menu") != null && Convert.ToInt32(CategoryId) > 0)
+            if (_session.GetObject<MenuItemViewModel[]>(SessionVars.Menu) != null && Convert.ToInt32(CategoryId) > 0)
             {
                 var innerHtml = new StringBuilder();
-                MenuItemViewModel[] menu = _session.GetObject<MenuItemViewModel[]>("menu");
+                MenuItemViewModel[] menu = _session.GetObject<MenuItemViewModel[]>(SessionVars.Menu);
                 innerHtml.Append("<div class=\"col-xs-12\" style=\"font-size:x-large;\"><span>Catalogue</span></div>");
                 foreach (MenuItemViewModel item in menu)
                 {

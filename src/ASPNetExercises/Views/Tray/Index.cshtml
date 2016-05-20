@@ -7,7 +7,7 @@
     <div class="text-center" style="padding-top:10px;">
         @{
             Dictionary<int, object> tray = Context.Session.GetObject<Dictionary<int,
-            Object>>("tray");
+            Object>>(SessionVars.Tray);
             int calTot = 0;
             decimal fatTot = 0.0M;
             int saltTot = 0;

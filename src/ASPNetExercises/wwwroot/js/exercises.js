@@ -9,6 +9,10 @@
     if ($("#register_popup") != undefined) {
         $('#register_popup').modal('show');
     }
+    //login
+    if ($("#login_popup") != undefined) {
+        $('#login_popup').modal('show');
+    }
     // details anchor click - to load popup on catalogue
     $("a.btn-default").on("click", function (e) {
         var Id = $(this).attr("data-id");

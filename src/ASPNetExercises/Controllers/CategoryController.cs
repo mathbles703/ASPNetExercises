@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Mvc;
 using ASPNetExercises.Models;
 using ASPNetExercises.ViewModels;
+using ASPNetExercises.Utils;
 using Microsoft.AspNet.Http;
 using System.Collections.Generic;
 using System;
@@ -17,15 +18,15 @@ namespace ASPNetExercises.Controllers
         {
             MenuViewModel vm = new MenuViewModel();
             // only build the catalogue once
-            if (HttpContext.Session.GetObject<List<Category>>("categories") == null)
+            if (HttpContext.Session.GetObject<List<Category>>(SessionVars.Categories) == null)
             {
                 try
                 {
                     CategoryModel catModel = new CategoryModel(_db);
                     // now load the categories
                     List<Category> categories = catModel.GetAll();
-                    HttpContext.Session.SetObject("categories", categories);
-                    vm.SetCategories(HttpContext.Session.GetObject<List<Category>>("categories"));
+                    HttpContext.Session.SetObject(SessionVars.Categories, categories);
+                    vm.SetCategories(HttpContext.Session.GetObject<List<Category>>(SessionVars.Categories));
                 }
                 catch (Exception ex)
                 {
@@ -60,25 +61,25 @@ namespace ASPNetExercises.Controllers
                     vms.Add(mvm);
                 }
                 MenuItemViewModel[] myMenu = vms.ToArray();
-                HttpContext.Session.SetObject("menu", myMenu);
+                HttpContext.Session.SetObject(SessionVars.Menu, myMenu);
             }
-            vm.SetCategories(HttpContext.Session.GetObject<List<Category>>("categories"));
+            vm.SetCategories(HttpContext.Session.GetObject<List<Category>>(SessionVars.Categories));
             return View("Index", vm);
         }
         [HttpPost]
         public ActionResult SelectItem(MenuViewModel vm)
         {
             Dictionary<int, object> tray;
-            if (HttpContext.Session.GetObject<Dictionary<String, Object>>("tray") == null)
+            if (HttpContext.Session.GetObject<Dictionary<int, Object>>(SessionVars.Tray) == null)   //int or string?
             {
                 tray = new Dictionary<int, object>();
             }
             else
             {
-                tray = HttpContext.Session.GetObject<Dictionary<int, object>>("tray");
+                tray = HttpContext.Session.GetObject<Dictionary<int, object>>(SessionVars.Tray);
             }
             MenuItemViewModel[] menu =
-            HttpContext.Session.GetObject<MenuItemViewModel[]>("menu");
+            HttpContext.Session.GetObject<MenuItemViewModel[]>(SessionVars.Menu);
             String retMsg = "";
             foreach (MenuItemViewModel item in menu)
             {
@@ -101,8 +102,8 @@ namespace ASPNetExercises.Controllers
                 }
             }
             ViewBag.AddMessage = retMsg;
-            HttpContext.Session.SetObject("tray", tray);
-            vm.SetCategories(HttpContext.Session.GetObject<List<Category>>("categories"));
+            HttpContext.Session.SetObject(SessionVars.Tray, tray);
+            vm.SetCategories(HttpContext.Session.GetObject<List<Category>>(SessionVars.Categories));
             return View("Index", vm);
         }
     }
