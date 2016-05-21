@@ -48,8 +48,7 @@
         <hr />
         <table class="table table-striped">
             <tr>
-                <th colspan="4" class="col-xs-4 text-left" style="font-size:large;font
-weight:bold;">Tray Totals</th>
+                <th colspan="4" class="col-xs-4 text-left" style="font-size:large;font-weight:bold;">Tray Totals</th>
             </tr>
             <tr>
                 <td class="col-xs-2 text-right">Cals</td>
@@ -70,6 +69,17 @@ weight:bold;">Tray Totals</th>
                 <td class="col-xs-4 text-left" id="salt">@saltTot</td>
             </tr>
         </table>
-        <a href="/Tray/ClearTray" class="btn btn-sm btn-success">Clear Tray</a>
+        <div class="text-center">
+            <form asp-controller="Tray" asp-action="AddTray" method="post" role="form">
+                @{ 
+                    if (Context.Session.GetString(SessionVars.User) != null)
+                    {
+                        <button type="submit" class="btn btn-sm btn-primary" id="modalbtn">Add Tray</button>
+                    }
+                }
+
+                &nbsp;<a href="/Tray/ClearTray" class="btn btn-sm btn-success">Clear Tray</a>
+            </form>
+        </div>
     </div>
 </div>
