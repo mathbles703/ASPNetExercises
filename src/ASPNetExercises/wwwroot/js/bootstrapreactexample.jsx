@@ -20,9 +20,9 @@ var ListItem = React.createClass({
     render: function () {
         return (
             <ListGroupItem>
-                <span style={idStyle}>{this.props.item.id}</span>
-                <span style={idStyle}>{this.props.item.data}</span>
-                <span style={idStyle}>{this.props.item.data2}</span>
+                <span style={idStyle} className="col-xs-2">{this.props.item.id}</span>
+                <span style={idStyle} className="col-xs-5">{this.props.item.data}</span>
+                <span >{this.props.item.data2}</span>
             </ListGroupItem>
         )
     }
@@ -41,7 +41,7 @@ var ListItems = React.createClass({
     },
     render: function () {
         var items = this.state.listitems.map(item =>
-            <ListItem item={item} key={item.id} />
+            <ListItem item={item}/>
         );
         return (
             <div style={{fontSize:"xx-large"}}>
