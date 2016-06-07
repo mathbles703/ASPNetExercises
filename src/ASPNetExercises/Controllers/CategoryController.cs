@@ -33,6 +33,10 @@ namespace ASPNetExercises.Controllers
                     ViewBag.Message = "Catalogue Problem - " + ex.Message;
                 }
             }
+            else
+            {
+                vm.SetCategories(HttpContext.Session.GetObject<List<Category>>(SessionVars.Categories));
+            }
             return View(vm);
         }
         public IActionResult SelectCategory(MenuViewModel vm)
