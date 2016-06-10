@@ -67,7 +67,7 @@ var Tray = React.createClass({
                 <Modal.Body>
                     <ListGroup>
                     <div className="text-center navbar navbar-default top25" style={{marginBottom:"0px"}}>
-                        <div className="col sm-4 col-xs-1 top10 bold">Qty</div>
+                        <div className="col-sm-4 col-xs-1 top10 bold">Qty</div>
                         <div className="col-sm-8 col-xs-10 top10 bold">Description</div>
                     </div>{detailsForModal}
                     </ListGroup>
