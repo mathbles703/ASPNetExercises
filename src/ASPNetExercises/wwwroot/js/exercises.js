@@ -19,6 +19,12 @@
         $("#results").text("");
         CopyToModal(Id);
     });
+    $("#jsondatartns").on("click", function (e) {
+        busySignal("/Data/Json");
+    });
+    $("#csvdatartns").on("click", function (e) {
+        busySignal("/Data/Csv");
+    });
 });
 function CopyToModal(id) {
     $("#qty").val("0");
@@ -32,4 +38,14 @@ function CopyToModal(id) {
     $("#description").text($("#descr" + id).data("description"));
     $("#detailsGraphic").attr("src", "/img/burger.jpg");
     $("#detailsId").val(id);
+}
+
+function busySignal(url)
+{
+    var busyImg = $('<img/>', {
+        src: "/img/wait.gif"
+    });
+    $("#busy").empty();
+    $("#busy").append(busyImg);
+    window.location.href = url;
 }

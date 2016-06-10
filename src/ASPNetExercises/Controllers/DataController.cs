@@ -3,15 +3,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using ASPNetExercises.Models;
 using System.Net.Http;
+using Microsoft.AspNet.Hosting;
 
 namespace ASPNetExercises.Controllers
 {
     public class DataController : Controller
     {
         AppDbContext _db;
-        public DataController(AppDbContext context)
+        IHostingEnvironment _env;
+        public DataController(AppDbContext context, IHostingEnvironment env)
         {
             _db = context;
+            _env = env;
         }
         // GET: /<controller>/
         public IActionResult Index()
@@ -37,6 +40,17 @@ namespace ASPNetExercises.Controllers
             var response = await httpClient.GetAsync(url);
             var result = await response.Content.ReadAsStringAsync();
             return result;
+        }
+
+        public IActionResult Csv()
+        {
+            StoreModel model = new StoreModel(_db);
+            bool storesLoaded = model.LoadFromFile(_env.WebRootPath);
+            if (storesLoaded)
+                ViewBag.CsvLoadedMsg = "Csv Loaded Successfully";
+            else
+                ViewBag.CsvLoadedMsg = "Csv NOT Loaded";
+            return View("Index");
         }
     }
 }
