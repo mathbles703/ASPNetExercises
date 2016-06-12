@@ -6,6 +6,8 @@ using ASPNetExercises.Models;
 using Microsoft.AspNet.Http;
 using ASPNetExercises.ViewModels;
 using ASPNetExercises.Utils;
+using Microsoft.AspNet.Authorization;
+
 namespace ASPNetExercises.Controllers
 {
     public class RegisterController : Controller
@@ -19,6 +21,7 @@ namespace ASPNetExercises.Controllers
             _signInMgr = signInManager;
         }
         // GET: Products
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View();

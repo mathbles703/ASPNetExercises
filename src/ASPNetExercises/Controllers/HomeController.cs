@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Http;
 using ASPNetExercises.Utils;
+using Microsoft.AspNet.Authorization;
+
 namespace ASPNetExercises.Controllers
 {
     public class HomeController : Controller
     {
         // GET: /<controller>/
+        [AllowAnonymous]
         public IActionResult Index()
         {
             if (HttpContext.Session.GetString(SessionVars.LoginStatus) == null)

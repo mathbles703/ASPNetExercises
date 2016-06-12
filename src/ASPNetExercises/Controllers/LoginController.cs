@@ -6,6 +6,8 @@ using Microsoft.AspNet.Http;
 using ASPNetExercises.Models;
 using ASPNetExercises.ViewModels;
 using ASPNetExercises.Utils;
+using Microsoft.AspNet.Authorization;
+
 namespace ASPNetExercises.Controllers
 {
     public class LoginController : Controller
@@ -19,19 +21,20 @@ namespace ASPNetExercises.Controllers
             _signInMgr = signInManager;
         }
         // GET: Login
-        public ActionResult Index()
+        [AllowAnonymous]
+        public ActionResult Index(string ReturnUrl = null)
         {
             if (HttpContext.Session.Get(SessionVars.LoginStatus) == null)
             {
                 HttpContext.Session.SetString(SessionVars.LoginStatus, "not logged in");
             }
             if (Convert.ToString(HttpContext.Session.Get(SessionVars.LoginStatus)) == "not logged in")
-        {
+            {
                 HttpContext.Session.SetString(SessionVars.Message, "most functionality requires you to login!");
-        }
+            }
             ViewBag.Status = HttpContext.Session.GetString(SessionVars.LoginStatus);
             ViewBag.Message = HttpContext.Session.GetString(SessionVars.Message);
-            ViewBag.ReturnUrl = "/Home";
+            ViewBag.ReturnUrl = ReturnUrl;
             return View();
         }
         private IActionResult RedirectToLocal(string returnUrl)
@@ -48,6 +51,7 @@ namespace ASPNetExercises.Controllers
         //
         // POST: /Account/Login
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {

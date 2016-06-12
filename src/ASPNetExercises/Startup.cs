@@ -6,6 +6,9 @@ using ASPNetExercises.Models;
 using Microsoft.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
+using Microsoft.AspNet.Authorization;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Mvc.Filters;
 
 namespace ASPNetExercises
 {
@@ -36,7 +39,18 @@ namespace ASPNetExercises
                 o.IdleTimeout = TimeSpan.FromSeconds(200);
             });
 
-            services.AddMvc();
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Cookies.ApplicationCookie.LoginPath = new Microsoft.AspNet.Http.PathString("/Login");
+            });
+            // only allow authenticated users
+            var defaultPolicy = new AuthorizationPolicyBuilder()
+            .RequireAuthenticatedUser()
+            .Build();
+            services.AddMvc(setup =>
+            {
+                setup.Filters.Add(new AuthorizeFilter(defaultPolicy));
+            });
         }
         // This method gets called by the runtime. Method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
